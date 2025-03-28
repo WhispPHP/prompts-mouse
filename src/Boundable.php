@@ -20,11 +20,25 @@ trait Boundable
         $this->bounds = $bounds;
     }
 
+    public function calculateBounds(int $cursorX, int $cursorY): Bounds
+    {
+        if (empty($this->output)) {
+            throw new \Exception('Output is empty');
+        }
+
+        return new Bounds(
+            $cursorX,
+            $cursorX + $this->width,
+            $cursorY,
+            $cursorY + $this->height,
+        );
+    }
+
     public function setOutput(string $output): void
     {
         $this->output = $output;
         $this->width = max(array_map(fn (string $line) => mb_strlen($line), explode(PHP_EOL, $output)));
-        $this->height = count(explode(PHP_EOL, $output));
+        $this->height = count(explode(PHP_EOL, trim($output)));
     }
 
     public function inBounds(int $x, int $y): bool
