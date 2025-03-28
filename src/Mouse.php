@@ -15,14 +15,19 @@ class Mouse
      *
      * @param  string  $sequence  The full mouse event sequence
      */
-    public function parseEvent(string $sequence): MouseEvent
+    public function parseEvent(string $sequence): ?MouseEvent
     {
         // Standard format is: ESC [ M Cb Cx Cy
         // where Cb = button state + 32
         //       Cx = x coordinate + 32
         //       Cy = y coordinate + 32
         if (strlen($sequence) < 6) {
-            throw new \Exception('Invalid mouse event sequence');
+            return null;
+        }
+
+        // Not a mouse event, we might have been passed something else, ignore
+        if (false === preg_match('/^\\033\[M$/', $sequence, $matches)) {
+            return null;
         }
 
         $button = ord($sequence[3]) - 32;
