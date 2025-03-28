@@ -33,6 +33,15 @@ class Mouse
         $event = MouseButton::tryFrom($button) ?? MouseMotion::tryFrom($button) ?? 'unknown';
         if ($event === MouseButton::LEFT || $event === MouseButton::RIGHT || $event === MouseButton::MIDDLE) {
             $this->lastButtonDown = $event;
+        } elseif ($event === MouseButton::RELEASED) { // Helpful shortcut for devs - don't just forward ansi events directly when we can make it easier for devs
+            $releasedButton = match($this->lastButtonDown) {
+                MouseButton::LEFT => MouseButton::RELEASED_LEFT,
+                MouseButton::RIGHT => MouseButton::RELEASED_RIGHT,
+                MouseButton::MIDDLE => MouseButton::RELEASED_MIDDLE,
+                default => throw new \Exception('No button down to release'),
+            };
+
+            return new MouseEvent($releasedButton, $this->x, $this->y);
         }
 
         return new MouseEvent($event, $this->x, $this->y);
