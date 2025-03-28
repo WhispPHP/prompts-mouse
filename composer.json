@@ -1,0 +1,18 @@
+{
+    "name": "whispphp/prompts-mouse",
+    "description": "Adds mouse support to Laravel Prompts",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Whisp\\Mouse\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ashley Hindle",
+            "email": "hey@ashleyhindle.com"
+        }
+    ],
+    "require": {}
+}
