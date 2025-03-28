@@ -38,7 +38,7 @@ class Mouse
                 MouseButton::LEFT => MouseButton::RELEASED_LEFT,
                 MouseButton::RIGHT => MouseButton::RELEASED_RIGHT,
                 MouseButton::MIDDLE => MouseButton::RELEASED_MIDDLE,
-                default => throw new \Exception('No button down to release'),
+                default => MouseButton::RELEASED,
             };
 
             return new MouseEvent($releasedButton, $this->x, $this->y);
