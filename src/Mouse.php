@@ -60,11 +60,21 @@ class Mouse
         return "\033[?1003h";
     }
 
+    public function enableBasic(): string
+    {
+        return "\033[?1000h";
+    }
+
+    public function enableBasicExtra(): string
+    {
+        return "\033[?1001h";
+    }
+
     /**
      * Disable mouse tracking
      */
     public function disable(): string
     {
-        return "\033[?1003l";
+        return "\033[?1003l\033[?1000l\033[?1000l";
     }
 }
